@@ -65,6 +65,20 @@ class FolderRepository extends NestedTreeRepository
     /**
      * @param Folder $folder
      */
+    public function makeEmpty(Folder $folder)
+    {
+//        $em = $this->getEntityManager();
+//        $this->deleteMedia($folder);
+//        $em->persist($folder);
+//        $em->flush();
+
+        $message = "wrong answer";
+        echo "<script type='text/javascript'>alert('$message');</script>";
+    }
+
+    /**
+     * @param Folder $folder
+     */
     private function deleteMedia(Folder $folder)
     {
         $em = $this->getEntityManager();

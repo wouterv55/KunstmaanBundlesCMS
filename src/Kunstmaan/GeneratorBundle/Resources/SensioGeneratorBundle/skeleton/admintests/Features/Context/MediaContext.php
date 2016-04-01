@@ -1,6 +1,7 @@
 <?php
 
-namespace {{ namespace }}\Features\Context;
+namespace \Features\Context;
+//namespace {{ namespace }}\Features\Context;
 
 use Behat\Behat\Context\BehatContext;
 use Behat\Behat\Context\Step;

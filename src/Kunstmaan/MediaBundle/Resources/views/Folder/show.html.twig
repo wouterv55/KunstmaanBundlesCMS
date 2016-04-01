@@ -97,6 +97,12 @@
                     <span class="large-screen">{{ 'media.folder.addsub.action' |trans }}</span>
                     <span class="small-screen">{{ 'media.folder.addsub.action_short' |trans }} <i class="fa fa-folder-o btn__icon-folder"></i></span>
                 </button>
+
+                <button class="btn btn-default btn--raise-on-hover" data-target="#empty-modal" data-toggle="modal" type="button">
+                    <span class="large-screen">Empty</span>
+                    <span class="small-screen">{{ 'media.folder.delete.action_short' |trans }} <i class="fa fa-folder-o btn__icon-folder"></i></span>
+                </button>
+
                 <button class="btn btn-default btn--raise-on-hover" data-target="#delete-modal" data-toggle="modal" type="button">
                     <span class="large-screen">{{ 'media.folder.delete.action' |trans }}</span>
                     <span class="small-screen">{{ 'media.folder.delete.action_short' |trans }} <i class="fa fa-folder-o btn__icon-folder"></i></span>
@@ -300,6 +306,7 @@
 
     <!-- Modals -->
     {% include '@KunstmaanMedia/Folder/addsub-modal.html.twig' %}
+    {% include '@KunstmaanMedia/Folder/empty-modal.html.twig' %}
     {% include '@KunstmaanMedia/Folder/delete-modal.html.twig' %}
 
 {% endblock %}

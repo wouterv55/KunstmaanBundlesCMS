@@ -133,6 +133,50 @@ class FolderController extends Controller
     }
 
     /**
+     * @param int $folderId
+     *
+     * @Route("/empty/{folderId}", requirements={"folderId" = "\d+"}, name="KunstmaanMediaBundle_folder_empty")
+     *
+     * @return RedirectResponse
+     */
+    public function emptyAction($folderId)
+    {
+        /** @var EntityManager $em */
+        $em = $this->getDoctrine()->getManager();
+
+        /* @var Folder $folder */
+        $folder       = $em->getRepository('KunstmaanMediaBundle:Folder')->getFolder($folderId);
+        $folderName   = $folder->getName();
+        $parentFolder = $folder->getParent();
+
+        if (is_null($parentFolder)) {
+            $this->get('session')->getFlashBag()->add(
+                'failure',
+                'You can\'t delete the \'' . $folderName . '\' folder!'
+            );
+        } else {
+            $em->getRepository('KunstmaanMediaBundle:Folder')->makeEmpty($folder);
+            $this->get('session')->getFlashBag()->add('success', 'Folder \'' . $folderName . '\' has been made empty!');
+            $folderId = $parentFolder->getId();
+        }
+
+        if (strpos($_SERVER['HTTP_REFERER'],'chooser')) {
+            $redirect = 'KunstmaanMediaBundle_chooser_show_folder';
+        } else $redirect = 'KunstmaanMediaBundle_folder_show';
+
+        $type = $this->get('request_stack')->getCurrentRequest()->get('type');
+
+        return new RedirectResponse(
+            $this->generateUrl($redirect,
+                array(
+                    'folderId' => $folderId,
+                    'type' => $type,
+                )
+            )
+        );
+    }
+
+    /**
      * @param Request $request
      * @param int     $folderId
      *
