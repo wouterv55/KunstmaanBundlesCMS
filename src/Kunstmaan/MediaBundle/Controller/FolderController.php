@@ -5,6 +5,7 @@ namespace Kunstmaan\MediaBundle\Controller;
 use Doctrine\ORM\EntityManager;
 use Kunstmaan\MediaBundle\AdminList\MediaAdminListConfigurator;
 use Kunstmaan\MediaBundle\Entity\Folder;
+use Kunstmaan\MediaBundle\Form\EmptyFolder;
 use Kunstmaan\MediaBundle\Form\FolderType;
 use Kunstmaan\MediaBundle\Helper\MediaManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -156,7 +157,7 @@ class FolderController extends Controller
             );
         } else {
             $em->getRepository('KunstmaanMediaBundle:Folder')->makeEmpty($folder);
-            $this->get('session')->getFlashBag()->add('success', 'Folder \'' . $folderName . '\' has been made empty!');
+            $this->get('session')->getFlashBag()->add('success', 'Folder \'' . $folderName . '\' has removed all the files in de folder!');
             $folderId = $parentFolder->getId();
         }
 
@@ -233,6 +234,62 @@ class FolderController extends Controller
                 'parent'    => $parent
             )
         );
+    }
+
+    /**
+     * @param Request $request
+     *
+     * @Route("/subcreate/{folderId}", requirements={"folderId" = "\d+"}, name="KunstmaanMediaBundle_folder_make_empty")
+     * @Method({"GET", "POST"})
+     * @Template()
+     *
+     * @return Response
+     */
+    public function makeEmptyAction(Request $request)
+    {
+
+        $form = $this->createForm(EmptyFolder::class);
+
+        return $this->render(
+            'KunstmaanMediaBundle:Folder:empty-modal.html.twig',
+            array(
+                'subform'   => $form->createView()
+            )
+        );
+
+//        /** @var EntityManager $em */
+//        $em = $this->getDoctrine()->getManager();
+//
+//        /* @var Folder $parent */
+//        $parent = $em->getRepository('KunstmaanMediaBundle:Folder')->getFolder($folderId);
+//        $folder = new Folder();
+//        $folder->setParent($parent);
+//        $form = $this->createForm(EmptyFolder::class, $folder);
+//        if ($request->isMethod('POST')) {
+//            $form->handleRequest($request);
+//            if ($form->isValid()) {
+//                $em->getRepository('KunstmaanMediaBundle:Folder')->save($folder);
+//
+//                $this->get('session')->getFlashBag()->add(
+//                    'success',
+//                    'Folder \'' . $folder->getName() . '\' has been created!'
+//                );
+//                if (strpos($_SERVER['HTTP_REFERER'],'chooser') !== false) {
+//                    $redirect = 'KunstmaanMediaBundle_chooser_show_folder';
+//                } else $redirect = 'KunstmaanMediaBundle_folder_show';
+//
+//                $type = $request->get('type');
+//
+//                return new RedirectResponse(
+//                    $this->generateUrl( $redirect,
+//                        array(
+//                            'folderId' => $folder->getId(),
+//                            'type' => $type,
+//                        )
+//                    )
+//                );
+//            }
+//        }
     }
 
     /**

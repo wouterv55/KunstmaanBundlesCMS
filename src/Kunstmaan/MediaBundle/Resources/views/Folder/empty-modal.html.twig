@@ -13,23 +13,50 @@
                 </h3>
             </div>
 
+            {% form_theme subform '@KunstmaanAdmin/Form/fields.html.twig' %}
+            {{ form_start(subform, {'method': 'POST', 'action': path('KunstmaanMediaBundle_folder_make_empty', { 'folderId' : folder.id , 'type' : type }), 'attr': {'id': 'empty-modal-form'}}) }}
+
             <!-- Body -->
             <div class="modal-body">
-                <p>
-                    {#{{ 'media.folder.delete.modal.text'| trans({'%folder%': folder.name }) | raw }}#}
-                    Would you like to delete all items in this folder?
-                </p>
+                {{ form_widget(subform) }}
             </div>
 
             <!-- Footer -->
             <div class="modal-footer">
-                <a href="{{ path('KunstmaanMediaBundle_folder_empty', { 'folderId' : folder.id , 'type' : type }) }}" class="js-add-app-loading btn btn-danger btn--raise-on-hover">
-                    Empty
-                </a>
+                <button type="submit" class="js-add-app-loading--forms btn btn-primary btn--raise-on-hover">
+                    {{ 'media.folder.addsub.modal.save' | trans }}
+                </button>
                 <button type="button" class="btn btn-default btn--raise-on-hover" data-dismiss="modal">
-                    {{ 'form.cancel' |trans }}
+                    {{ 'form.cancel' | trans }}
                 </button>
             </div>
+            {{ form_end(subform) }}
+
+
+
+            {#<!-- Body -->#}
+            {#<div class="modal-body">#}
+                {#<p>#}
+                    {#{{ 'media.folder.delete.modal.text'| trans({'%folder%': folder.name }) | raw }}#}
+                    {#Are you sure you want to delete all files in {{ folder.name }}?#}
+                {#</p>#}
+
+                {#<p>#}
+                    {#<input type="checkbox" name="test" id="test"> Also delete subfolders.#}
+                {#</p>#}
+
+            {#</div>#}
+
+            {#<!-- Footer -->#}
+            {#<div class="modal-footer">#}
+                {#<a href="{{ path('KunstmaanMediaBundle_folder_empty', { 'folderId' : folder.id , 'type' : type }) }}" class="js-add-app-loading btn btn-danger btn--raise-on-hover">#}
+                    {#Empty#}
+                {#</a>#}
+                {#<button type="button" class="btn btn-default btn--raise-on-hover" data-dismiss="modal">#}
+                    {#{{ 'form.cancel' |trans }}#}
+                {#</button>#}
+            {#</div>#}
+
         </div>
     </div>
 </div>

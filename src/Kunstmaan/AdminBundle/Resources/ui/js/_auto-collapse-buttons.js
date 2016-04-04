@@ -19,6 +19,8 @@ kunstmaanbundles.autoCollapseButtons = (function($, window, undefined) {
         // add more-dropdown when there are at least 2 buttons for dropdown
         if ($allButtons.length > (buttonsVisible + 1)) {
             $buttonsRedundant = $allButtons.slice(buttonsVisible);
+            console.log(buttonsVisible);
+            console.log($buttonsRedundant);
             createMoreDropdown();
         }
     };
@@ -26,6 +28,7 @@ kunstmaanbundles.autoCollapseButtons = (function($, window, undefined) {
     createMoreDropdown = function() {
         // create dom elements
         $moreButtonContainer = $('<div class="btn-group btn-group--more">').appendTo($btnGroup);
+        console.log("Buttoncontainer");
         $moreButton = $('<button class="btn btn-default btn--raise-on-hover dropdown-toggle" data-toggle="dropdown">').text('More ').appendTo($moreButtonContainer);
         $caret = $('<span class="fa fa-caret-down">').appendTo($moreButton);
         $dropdownList = $('<ul class="dropdown-menu dropdown-menu-right dropdown-menu--more">').appendTo($moreButtonContainer);
@@ -33,7 +36,7 @@ kunstmaanbundles.autoCollapseButtons = (function($, window, undefined) {
         // move buttons to dropdown list & remove styling
         $buttonsRedundant.each( function() {
             var $li = $('<li>');
-
+            console.log("movebuttontodropdown");
             $(this).removeClass().addClass('btn-dropdown-menu').appendTo($li);
             $li.appendTo($dropdownList);
         });
